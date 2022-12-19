@@ -2,7 +2,7 @@ import { Contract, providers, utils } from "ethers";
 import Head from 'next/head'
 import { useEffect, useRef, useState } from "react";
 import web3Modal from "web3modal";
-import { abi, NFT_CONTRACT_ADDRESS } from "../contacts";
+import { abi, NFT_CONTRACT_ADDRESS } from "../constants";
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
@@ -11,8 +11,8 @@ export default function Home() {
   // Loading is set to true when we are waiting for a transaction to get minted
   const [loading, setLoading] = useState(false);
 
-  // tokenIdMinted keeps track of the number of tokenIds that have been minted
-  const [tokenIdMinted, setTokenIdsMinted] = useState("0");
+  // tokenIdsMinted keeps track of the number of tokenIds that have been minted
+  const [tokenIdsMinted, setTokenIdsMinted] = useState("0");
   //  Create a reference to the web3 Modal (used for connecting to Metamask ) which persists asz long as the page is open
   const web3ModalRef = useRef();
 
@@ -92,7 +92,7 @@ export default function Home() {
     // Connect to MetaMask
     // Since we store `web3Modal` as a reference, we need to access the  `current` value to get access to te underlying object
     const provider = await web3ModalRef.current();
-    const web3Provider = new providers.web3Provider(provider);
+    const web3Provider = new providers.Web3Provider(provider);
 
     // If user is not connected to the Mumbai network, let them know and throw an error
     const { chainId } = await web3Provider.getNetwork();
@@ -163,7 +163,7 @@ export default function Home() {
     <Head>
       <title>LW3Punks</title>
       <meta name="description" content="LW3Punks-Dapp" />
-      <link ref="icon" href="/favicon.ico" />
+      <link ref={ref => icon (ref)} href="/favicon.ico" />
     </Head>
     <div className={styles.main}>
       <div>
